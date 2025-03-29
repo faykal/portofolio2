@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAYMENT FAYKAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Global Style */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background Video */
+        .video-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(5px) brightness(0.7);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Loading Screen */
+        .preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 9999;
+            animation: fadeOut 3s forwards 3.5s;
+        }
+
+        .loading-text {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #fff;
+            border-top: 5px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+        @keyframes pulse { 50% { opacity: 0.6; } }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes blink { 50% { opacity: 0; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Header Animasi */
+        .typing::after {
+            content: '|';
+            display: inline-block;
+            animation: blink 0.7s infinite;
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Glass Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Video -->
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="https://files.catbox.moe/z2ftsb.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="overlay"></div>
+
+    <!-- Loading Screen -->
+    <div class="preloader">
+        <div class="loader"></div>
+        <p class="loading-text">Loading...</p>
+    </div>
+
+    <!-- Header -->
+    <header class="text-2xl font-bold py-4">
+        <span class="typing"></span>
+    </header>
+
+    <!-- Konten -->
+    <div class="container">
+        <div class="glass">
+            <img src="https://files.catbox.moe/tiwcou.jpg" class="w-full rounded-lg mb-4" alt="Thumbnail">
+            <h2 class="text-2xl font-bold text-blue-700 mb-2">Pembayaran</h2>
+            <p class="text-sm text-gray-300 mb-4">Silakan transfer ke qris di atas</p>
+
+            <div class="space-y-3">
+                <a href="https://wa.me/6285234754939" target="_blank"
+                   class="block bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 rounded transition duration-300">
+                   Chat Admin
+                </a>
+                <a href="https://whatsapp.com/channel/0029Vax4ADpI1rcZh3aveq1e" target="_blank"
+                   class="block bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 rounded transition duration-300">
+                   Join Channel
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>© faykal 2025 | Terimakasih sudah berbelanja di faykal store</footer>
+
+    <!-- Musik Otomatis -->
+    <audio id="bg-music" loop autoplay>
+        <source src="https://files.catbox.moe/myqq3c.mp3" type="audio/aac">
+    </audio>
+
+    <script>
+        // Animasi Ketik & Hapus
+        const text = "PAYMENT FAYKAL";
+        let index = 0;
+        let isDeleting = false;
+        let speed = 100;
+        function typeEffect() {
+            let typingElement = document.querySelector(".typing");
+            if (isDeleting) {
+                typingElement.textContent = text.substring(0, index--);
+                speed = 50;
+            } else {
+                typingElement.textContent = text.substring(0, index++);
+                speed = 100;
+            }
+            if (!isDeleting && index === text.length) {
+                speed = 100;
+                isDeleting = true;
+            } else if (isDeleting && index === 0) {
+                isDeleting = false;
+            }
+            setTimeout(typeEffect, speed);
+        }
+        typeEffect();
+
+        // Copy Nomor Dana
+        function copyDana() {
+            let danaInput = document.getElementById("dana-number");
+            danaInput.select();
+            danaInput.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            alert("Nomor Dana disalin: " + danaInput.value);
+        }
+
+        // Auto Play Musik
+        window.addEventListener("click", () => {
+            document.getElementById("bg-music").play();
+        }, { once: true });
+    </script>
+
+</body>
+</html>
